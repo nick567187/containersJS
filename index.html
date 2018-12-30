@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<title> Containers JS </title>
+  	<link rel="stylesheet" href="styles.css"></link>
+  </head>
+  <body>
+    <div class="container">
+    	<div class="box">
+    	</div>
+    </div>
+    <p class="text"> Hello </p>
+  </body>
+  
+  <script>
+  	let body = document.querySelector('body');
+  	let container =  document.querySelector('.container');
+  	let box =  document.querySelector('.box');
+    let isMouseDown;
+
+  	function mouseDown() {
+      isMouseDown = true;
+  	}
+
+  	function mouseUp() {
+      isMouseDown = false;
+  	}
+
+  	function mouseMove(e) {
+  		if (isMouseDown) {
+	      const x = e.clientX;
+	      const y = e.clientY;
+	      const outerRect = container.getClientRects()[0];
+	      const innerRect = box.getClientRects()[0];
+  			let top;
+  			let left;
+        if (x >= outerRect.x && x <= outerRect.x + outerRect.width - innerRect.width) {
+          left = x - outerRect.x;
+        } else if (x < outerRect.x) {
+          left = 0;
+        } else {
+          left = outerRect.width - innerRect.width;
+        }
+
+        if (y >= outerRect.y && y <= outerRect.y + outerRect.height - innerRect.height) {
+          top = y - outerRect.y;
+        } else if (y < outerRect.y) {
+          top = 0;
+        } else {
+          top = outerRect.height - innerRect.height;
+        }
+        console.log(top, x,y)
+
+        box.style.top = `${top}px`;
+        box.style.left = `${left}px`;
+  		}
+  	}
+
+    box.addEventListener('mousedown', mouseDown);
+    window.addEventListener('mouseup', mouseUp);
+    body.addEventListener('mousemove', mouseMove);
+
+
+  </script>
+</html>
